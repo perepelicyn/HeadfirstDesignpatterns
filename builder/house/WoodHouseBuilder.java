@@ -1,0 +1,46 @@
+package headfirst.designpatterns.builder.house;
+
+public class WoodHouseBuilder extends HouseBuilder{
+    int numWalls = 6;     // 4 exterior walls, 2 interior
+    int numWindows = 10;
+    String windowMaterial = "Tempered glass";
+    String wallMaterial = "Wood, 4x6";
+    String interiorWallMaterial = "Wood, 2x4";
+    String roofMaterial = "Metal";
+    public WoodHouseBuilder(){
+        this.builderName = "WOOD HOUSE BUILDER";
+        setHouseType(HouseType.WOOD);
+    }
+    @Override
+    public HouseBuilder addWalls() {
+        for (int i = 0; i < 4; i++) {
+            System.out.println("Nailing wood for wall made out of " + wallMaterial);
+            house.addWall(new Wall(wallMaterial));
+        }
+        // add interior walls
+        for (int i = 0; i < numWalls - 4; i++) {
+            System.out.println("Nailing wood for interior wall made out of " + interiorWallMaterial);
+            house.addWall(new InteriorWall(interiorWallMaterial));
+        }
+        return this;
+    }
+
+    @Override
+    public HouseBuilder addRoof() {
+        house.addRoof(new Roof(roofMaterial));
+        return this;
+    }
+
+    @Override
+    public HouseBuilder addWindows() {
+        for (int i = 0; i < numWindows; i++) {
+            System.out.println("Adding window made out of " + windowMaterial);
+            house.addWindow(new Window(windowMaterial));
+        }
+        return this;
+    }
+    public House build(){
+        System.out.println("Nail everything together");
+        return house;
+    }
+}
